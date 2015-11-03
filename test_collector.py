@@ -20,7 +20,7 @@ for test in tests_not_completed:
     print (test.wpt_status_code, test.wpt_status_text)
 
 
-#TODO
+#TODO Gotta populate all the test results that will be used later
 '''
 Gotta populate all the test results that will be used later
 This will probably be gotten from the ['data']['average']['firstView']

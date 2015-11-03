@@ -52,11 +52,7 @@ def create_test(request):
             test.save()
 
             json_test_result = wpt.get_test_details(test.wpt_test_id)
-
-            test.wpt_status_code = json_test_result['statusCode']
-            test.wpt_status_text = json_test_result['statusText']
-
-            test.save()
+            test.update_from_test_result(json_test_result)
 
             return HttpResponseRedirect('/test_created/')
 
