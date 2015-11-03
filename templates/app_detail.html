@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{app.name}}</title>
+</head>
+<body>
+{{app.name}}
+
+Testes:
+
+{% for test in tests %}
+        <li> {{ test.id }} - {{ test.label }} - {{ test.created_date }} -  {{ test.wpt_jsonUrl }}</li>
+{% endfor %}
+</body>
+</html>

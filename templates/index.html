@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CNOVA Web Page Tester</title>
+</head>
+<body>
+Aplicações:
+
+{% for application in applications %}
+        <li><a href="{% url 'app_detail' application.id %}">{{ application.name }}</a></li>
+{% endfor %}
+
+</body>
+</html>
