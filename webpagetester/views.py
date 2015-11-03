@@ -53,8 +53,8 @@ def create_test(request):
 
             json_test_result = wpt.get_test_details(test.wpt_test_id)
 
-            test.wpt_status_code = json_test_result['data']['statusCode']
-            test.wpt_status_text = json_test_result['data']['statusText']
+            test.wpt_status_code = json_test_result['statusCode']
+            test.wpt_status_text = json_test_result['statusText']
 
             test.save()
 
