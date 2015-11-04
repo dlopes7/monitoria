@@ -1,16 +1,20 @@
+{% load render_table from django_tables2 %}
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{app.name}}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+
+
 </head>
 <body>
 {{app.name}}
 
-Testes:
 
-{% for test in tests %}
-        <li> {{ test.id }} - {{ test.label }} - {{ test.created_date }} -  {{ test.wpt_jsonUrl }}</li>
-{% endfor %}
+ {% render_table table %}
 </body>
 </html>

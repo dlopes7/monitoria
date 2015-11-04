@@ -1,10 +1,11 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 
 from .models import Application, Test, User
 from .forms import TestForm
 from .utils import WebPageTester
+from .tables import TestTable
 
 def index(request):
     applications = Application.objects.all()
@@ -16,11 +17,10 @@ def app_detail(request, app_id):
     app = get_object_or_404(Application, pk=app_id)
     tests = Test.objects.filter(application=app)
 
-    return render(request, 'app_detail.html', {'tests': tests})
+    table = TestTable(tests)
 
+    return render(request, 'app_detail.html', {'table': table})
 
-def test_created(request):
-    return render(request, 'test_created.html')
 
 def create_test(request):
     # if this is a POST request we need to process the form data
@@ -54,7 +54,7 @@ def create_test(request):
             json_test_result = wpt.get_test_details(test.wpt_test_id)
             test.update_from_test_result(json_test_result)
 
-            return HttpResponseRedirect('/test_created/')
+            return render(request, 'test_created.html', {'test': test})
 
     # if a GET (or any other method) we'll create a blank form
     else:

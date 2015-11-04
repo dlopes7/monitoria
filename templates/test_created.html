@@ -8,7 +8,18 @@
 </head>
 <body>
 
-O teste foi criado com sucesso.
+<h1>Teste criado com sucesso.</h1>
+
+<li>Nome: {{ test.label }}</li>
+<li>Data: {{ test.created_date }}</li>
+<li>Usuario: {{ test.created_by.name }}</li>
+<li>URL: {{ test.url }}</li>
+<li>Browser: {{ test.wpt_from }}</li>
+<li>Location: {{ test.wpt_location }}</li>
+<li>Link: <a href="{{ test.wpt_userUrl }}">{{ test.wpt_userUrl }} </a></li>
+<li>Status: {{ test.wpt_status_code }} - {{ test.wpt_status_text }}</li>
+
+
 </body>
 </html>
 
