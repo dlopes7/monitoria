@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.utils import timezone
+from django.db.models import Q
+
+from django_tables2 import RequestConfig
 
 from .models import Application, Test, User
 from .forms import TestForm
@@ -9,7 +12,17 @@ from .tables import TestTable
 
 def index(request):
     applications = Application.objects.all()
-    return render(request, 'index.html', {'applications': applications,
+    dict_apps = {}
+    for app in applications:
+        num_tests_completed = len(Test.objects.filter(wpt_status_code = 200, application=app))
+        num_tests_not_completed = len(Test.objects.filter(~Q(wpt_status_code = 200), application=app))
+
+        dict_apps[app.name] = {'id':app.id,
+                               'completed': num_tests_completed,
+                               'not_completed': num_tests_not_completed}
+
+    print(dict_apps)
+    return render(request, 'index.html', {'applications': dict_apps,
                                           })
 
 
@@ -18,8 +31,19 @@ def app_detail(request, app_id):
     tests = Test.objects.filter(application=app)
 
     table = TestTable(tests)
+    RequestConfig(request).configure(table)
 
-    return render(request, 'app_detail.html', {'table': table})
+    return render(request, 'app_detail.html', {'table': table, 'app':app})
+
+def update_test(request):
+
+    id_teste = request.POST['the_post'][0]
+    test = Test.objects.get(id=int(id_teste))
+    wpt = WebPageTester()
+    print('Updating Test "{id} - {name}"'.format(id=test.id ,name=test.label))
+    test.update_from_test_result(wpt.get_test_details(test.wpt_test_id))
+
+    return HttpResponse('OK')
 
 
 def create_test(request):
@@ -29,11 +53,14 @@ def create_test(request):
         form = TestForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            print(form.cleaned_data)
             test_label = form.cleaned_data['test_label']
             test_url = form.cleaned_data['test_url']
+            test_application = form.cleaned_data['test_application']
+
             test_created_date = timezone.now()
             test_user = User.objects.get(id=1)
-            test_app = Application.objects.get(id=1)
+            test_app = Application.objects.get(id=test_application)
 
             test = Test(label=test_label,
                         application=test_app,

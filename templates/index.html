@@ -1,14 +1,20 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CNOVA Web Page Tester</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/webpagetester.css' %}" />
+
 </head>
 <body>
 Aplicações:
 
-{% for application in applications %}
-        <li><a href="{% url 'app_detail' application.id %}">{{ application.name }}</a></li>
+{% for application, values in applications.items %}
+        <li> {{ application }} - ({{ values.completed }} completos, {{ values.not_completed }} incompletos)</li>
+
 {% endfor %}
 
 </body>

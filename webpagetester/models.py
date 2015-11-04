@@ -87,7 +87,6 @@ class Test(models.Model):
         self.wpt_status_code = test_result['statusCode']
         self.wpt_status_text = test_result['statusText']
 
-
         #If the test completed without errors
         if self.wpt_status_code == 200:
             self.wpt_from = test_result['data']['from']
@@ -157,6 +156,7 @@ class Test(models.Model):
             self.wpt_location = test_result['data']['testInfo']['location']
 
         self.save()
+
 
 
 

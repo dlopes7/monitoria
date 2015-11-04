@@ -6,15 +6,31 @@
 <head>
     <meta charset="UTF-8">
     <title>{{app.name}}</title>
-
     <link rel="stylesheet" type="text/css" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/webpagetester.css' %}" />
+
+    <script type="text/javascript" src="{% static 'js/libs/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/WearProtection.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js//app_detail.js' %}"></script>
+
 
 
 </head>
 <body>
-{{app.name}}
+<div id="overlay"><img id="img-load" src="{% static 'img/loading.gif' %}"></div>
 
+<div>
+    <h1>{{app.name}}</h1>
+</div>
+<div>
+    <form action="/create_test/" method="POST">
+    {% csrf_token %}
+    <button type="submit" >Criar Teste</button>
+    </form>
+</div>
 
- {% render_table table %}
+<div>
+    {% render_table table %}
+</div>
 </body>
 </html>

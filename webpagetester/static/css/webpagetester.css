@@ -135,3 +135,15 @@ input[type=radio]:checked {
     -o-background-size: 28px 28px;
     background-size: 28px 28px;
 }
+
+#overlay {
+  display:none;
+  position:absolute;
+  background:#fff;
+}
+#img-load {
+  position:absolute;
+  max-width:10%;
+  max-height:10%;
+
+}
