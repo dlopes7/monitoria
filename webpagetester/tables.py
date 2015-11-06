@@ -1,4 +1,7 @@
+from django.utils.safestring import mark_safe
+
 import django_tables2 as tables
+
 from webpagetester.models import Test
 
 from webpagetester.utils import ms_to_sec, size
@@ -26,11 +29,13 @@ class TestTable(tables.Table):
     wpt_firstView_breakdown_image_bytes  = tables.Column(verbose_name='IMG')
     wpt_firstView_breakdown_js_bytes  = tables.Column(verbose_name='Js')
     wpt_firstView_breakdown_other_bytes  = tables.Column(verbose_name='Other')
+    wpt_userUrl = tables.Column(verbose_name='Link')
     url = tables.Column(verbose_name='Url')
-
     created_date = tables.Column(verbose_name='Data')
-
     label = tables.Column(verbose_name='Name')
+
+    def render_wpt_userUrl(self, value):
+        return mark_safe('<a href="{link}" target="_blank">open</a>'.format(link=value))
 
     def render_wpt_firstView_TTFB(self, value):
         return '{sec:.2f}s'.format(sec=ms_to_sec(value))
@@ -67,6 +72,7 @@ class TestTable(tables.Table):
                   'id',
                   'label',
                   'url',
+                  'wpt_userUrl',
                   'created_date',
                   'wpt_status_code',
                   'wpt_status_text',

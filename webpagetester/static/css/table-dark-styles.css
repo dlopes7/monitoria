@@ -37,7 +37,8 @@ table thead th.orderable.asc > a {
 table thead th.orderable.desc > a {
     background-image: url(../img/arrow-active-down.png);
 }
-table thead th > a:link,
-table thead th > a:visited {
+
+a:link,
+a:visited{
     color: #666;
 }

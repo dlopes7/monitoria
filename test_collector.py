@@ -9,7 +9,7 @@ from webpagetester.models import User, Application, Test
 
 
 wpt = WebPageTester()
-tests_not_completed = Test.objects.all()
+tests_not_completed = Test.objects.filter(~Q(wpt_status_code = 200))
 
 for test in tests_not_completed:
     print (test.label, test.wpt_status_code, test.wpt_status_text, end=' -> ')
@@ -19,5 +19,4 @@ for test in tests_not_completed:
 
     print (test.wpt_status_code, test.wpt_status_text)
 
-#TODO Create Test Form - Chose application on a select element
 #TODO Populate the actuals, average and std of the test - START WITH ACTUAL

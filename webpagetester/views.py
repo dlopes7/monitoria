@@ -53,21 +53,15 @@ def create_test(request):
         form = TestForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            print(form.cleaned_data)
             test_label = form.cleaned_data['test_label']
             test_url = form.cleaned_data['test_url']
             test_application = form.cleaned_data['test_application']
 
-            test_created_date = timezone.now()
-            test_user = User.objects.get(id=1)
-            test_app = Application.objects.get(id=test_application)
-
             test = Test(label=test_label,
-                        application=test_app,
+                        application=Application.objects.get(id=test_application),
                         url=test_url,
-                        created_date=test_created_date,
-                        created_by=test_user)
-
+                        created_date=timezone.now(),
+                        created_by=User.objects.get(id=1))
             test.save()
 
             wpt = WebPageTester()
