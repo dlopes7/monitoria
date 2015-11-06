@@ -9,7 +9,7 @@ class WebPageTester:
         params = {
             'url': test.url,
             'label': test.label,
-            'location': 'ec2-sa-east-1:Chrome',
+            #'location': 'ec2-sa-east-1:Chrome',
             'f': WPT_FORMAT,
             'login': WPT_LOGIN,
             'password': WPT_PASSWORD,
