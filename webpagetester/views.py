@@ -37,7 +37,7 @@ def app_detail(request, app_id):
 
 def update_test(request):
 
-    id_teste = request.POST['the_post'][0]
+    id_teste = request.POST['test_id']
     test = Test.objects.get(id=int(id_teste))
     wpt = WebPageTester()
     print('Updating Test "{id} - {name}"'.format(id=test.id ,name=test.label))
@@ -68,18 +68,10 @@ def create_test(request):
                         created_date=test_created_date,
                         created_by=test_user)
 
-
-            wpt = WebPageTester()
-            json_result = (wpt.create_test(url=test.url, label=test.label))
-
-            test.wpt_test_id = json_result['data']['testId']
-            test.wpt_jsonUrl = json_result['data']['jsonUrl']
-            test.wpt_userUrl = json_result['data']['userUrl']
-
             test.save()
 
-            json_test_result = wpt.get_test_details(test.wpt_test_id)
-            test.update_from_test_result(json_test_result)
+            wpt = WebPageTester()
+            wpt.create_test(test)
 
             return render(request, 'test_created.html', {'test': test})
 

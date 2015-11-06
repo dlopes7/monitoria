@@ -4,11 +4,11 @@ function update_test(d) {
     $.ajax({
         url : "/update_test/", // the endpoint
         type : "POST", // http method
-        data : { the_post : d.name }, // data sent with the post request
+        data : { test_id : d.name }, // data sent with the post request
 
         // handle a successful response
         success : function(json) {
-            console.log("Updated - " + d.name); // another sanity check
+            $("#overlay").fadeOut();
             location.reload();
         },
 
@@ -18,7 +18,7 @@ function update_test(d) {
         }
     });
 
-    $("#overlay").fadeOut();
+
 }
 
 $(document).ready(function(){

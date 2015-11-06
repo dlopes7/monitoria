@@ -1,12 +1,12 @@
 table.paleblue {
     border-collapse: collapse;
-    border-color: #CCC;
-    border: 1px solid #DDD;
+    border-color: #444444;
 }
 
 table.paleblue,
 table.paleblue +  ul.pagination {
     font: normal 11px/14px 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
+    color: #000000;
 }
 
 table.paleblue a:link,
@@ -25,8 +25,8 @@ table.paleblue td,
 table.paleblue th {
     padding: 5px;
     line-height: 13px;
-    border-bottom: 1px solid #EEE;
-    border-left: 1px solid #DDD;
+    border-bottom: 1px solid #444444;
+    border-left: 1px solid #444444;
     text-align: left;
 }
 
@@ -37,8 +37,8 @@ table.paleblue thead td:first-child {
 
 table.paleblue thead th,
 table.paleblue thead td {
-    background: #FCFCFC url(../img/header-bg.png) left bottom repeat-x;
-    border-bottom: 1px solid #DDD;
+    background: #222222;
+    border-bottom: 1px solid #222222;
     padding: 2px 5px;
     font-size: 11px;
     vertical-align: middle;
@@ -62,19 +62,18 @@ table.paleblue thead th.orderable.desc > a {
 }
 
 table.paleblue tr.odd {
-    background-color: #EDF3FE;
+    background-color: #888888;
 }
 
 table.paleblue tr.even {
-    background-color: white;
+    background-color: #BBBBBB;
 }
 
 table.paleblue + ul.pagination {
-    background: white url(../img/pagination-bg.gif) left 180% repeat-x;
+    background: #222222;
     overflow: auto;
     margin: 0;
     padding: 10px;
-    border: 1px solid #DDD;
     list-style: none;
 }
 

@@ -1,5 +1,5 @@
 {% load staticfiles %}
 <form action="/update_test/" method="POST" class="updater" name="{{ record.id }}">
     {% csrf_token %}
-    <button type="submit" >Update</button>
+    <button type="submit" class="button" >Update</button>
 </form>
