@@ -9,7 +9,7 @@ from webpagetester.models import User, Application, Test
 
 
 wpt = WebPageTester()
-tests_not_completed = Test.objects.filter(~Q(wpt_status_code = 200))
+tests_not_completed = Test.objects.filter(~Q(wpt_status_code = 200), ~Q(wpt_status_code = -1))
 
 for test in tests_not_completed:
     print (test.label, test.wpt_status_code, test.wpt_status_text, end=' -> ')

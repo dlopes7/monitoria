@@ -23,16 +23,23 @@ class TestTable(tables.Table):
     wpt_location = tables.Column(verbose_name='Location')
     wpt_status_code = tables.Column(verbose_name='Status')
     wpt_status_text = tables.Column(verbose_name='Description')
-    wpt_firstView_breakdown_css_bytes  = tables.Column(verbose_name='CSS')
-    wpt_firstView_breakdown_flash_bytes  = tables.Column(verbose_name='Flash')
-    wpt_firstView_breakdown_html_bytes  = tables.Column(verbose_name='HTML')
-    wpt_firstView_breakdown_image_bytes  = tables.Column(verbose_name='IMG')
-    wpt_firstView_breakdown_js_bytes  = tables.Column(verbose_name='Js')
-    wpt_firstView_breakdown_other_bytes  = tables.Column(verbose_name='Other')
+    wpt_firstView_breakdown_css_bytes = tables.Column(verbose_name='CSS')
+    wpt_firstView_breakdown_flash_bytes = tables.Column(verbose_name='Flash')
+    wpt_firstView_breakdown_html_bytes = tables.Column(verbose_name='HTML')
+    wpt_firstView_breakdown_image_bytes = tables.Column(verbose_name='IMG')
+    wpt_firstView_breakdown_js_bytes = tables.Column(verbose_name='Js')
+    wpt_firstView_breakdown_other_bytes = tables.Column(verbose_name='Other')
     wpt_userUrl = tables.Column(verbose_name='Link')
     url = tables.Column(verbose_name='Url')
     created_date = tables.Column(verbose_name='Data')
     label = tables.Column(verbose_name='Name')
+    wpt_firstView_images_screenShot = tables.Column(verbose_name='Scr')
+
+    def render_wpt_firstView_images_screenShot(self, value):
+        #<a class="fancybox" rel="group" href="big_image_1.jpg"><img src="small_image_1.jpg" alt="" /></a>
+        if value =='placeholder':
+            return '-'
+        return mark_safe('<a class="fancybox" rel="group" href="{img}"><img width="40px" heigh="40px" src="{img}" alt="" /></a>'.format(img=value))
 
     def render_wpt_userUrl(self, value):
         return mark_safe('<a href="{link}" target="_blank">open</a>'.format(link=value))
@@ -73,6 +80,7 @@ class TestTable(tables.Table):
                   'label',
                   'url',
                   'wpt_userUrl',
+                  'wpt_firstView_images_screenShot',
                   'created_date',
                   'wpt_status_code',
                   'wpt_status_text',

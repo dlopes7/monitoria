@@ -1,6 +1,8 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "monitoria.settings")
 
+import datetime
+
 from django.utils import timezone
 
 from webpagetester.models import User, Application, Test
@@ -22,12 +24,14 @@ if make_apps:
     app = Application(name='Extra')
     app.save()
 else:
-    app = Application.objects.get(pk=1)
+    app = Application.objects.get(pk=3)
 
+dia = datetime.datetime.today().day
+mes = datetime.datetime.today().month
 for i in range(5):
-    test = Test(label='Test {app} {num}'.format(app=app.name , num=i+1),
+    test = Test(label='Test {app} {dia}_{mes}_{num}'.format(app=app.name , num=i+1, dia=dia, mes=mes),
                 application=app,
-                url='www.extra.com.br',
+                url='www.pontofrio.com.br',
                 created_date=timezone.now(),
                 created_by=user)
     print('Creating test {test}'.format(test=test.label))

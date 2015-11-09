@@ -13,7 +13,7 @@
 Aplicações:
 
 {% for application, values in applications.items %}
-        <li> {{ application }} - ({{ values.completed }} completos, {{ values.not_completed }} incompletos)</li>
+        <li> <a href="/{{application.id}}">{{ application.name }} </a> - ({{ values.completed }} completos, {{ values.not_completed }} incompletos)</li>
 
 {% endfor %}
 

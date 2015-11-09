@@ -17,7 +17,7 @@ def index(request):
         num_tests_completed = len(Test.objects.filter(wpt_status_code = 200, application=app))
         num_tests_not_completed = len(Test.objects.filter(~Q(wpt_status_code = 200), application=app))
 
-        dict_apps[app.name] = {'id':app.id,
+        dict_apps[app] = {'id':app.id,
                                'completed': num_tests_completed,
                                'not_completed': num_tests_not_completed}
 

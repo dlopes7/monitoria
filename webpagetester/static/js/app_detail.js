@@ -14,6 +14,9 @@ function update_test(d) {
 
 
         error : function(xhr,errmsg,err) {
+            alert('Erro! ' +  xhr.responseText)
+            $("#overlay").fadeOut();
+
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
@@ -40,6 +43,7 @@ $(document).ready(function(){
       left : ($t.width() / 2)
     });
 
+    $(".fancybox").fancybox();
 });
 
 $(function() {
