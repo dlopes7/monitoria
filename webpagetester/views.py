@@ -5,12 +5,21 @@ from django.db.models import Q
 
 from django_tables2 import RequestConfig
 
-from .models import Application, Test, User
+from .models import Application, Test, User, Log
 from .forms import TestForm
 from .utils import WebPageTester
 from .tables import TestTable
 
+
+
 def index(request):
+    '''
+
+    Home Page
+    has the application list and the number of completed/incompleted tests on each
+    :param request:
+    :return:
+    '''
     applications = Application.objects.all()
     dict_apps = {}
     for app in applications:
@@ -27,6 +36,14 @@ def index(request):
 
 
 def app_detail(request, app_id):
+    '''
+
+    Tests management page
+    Has a table with all the tests and buttons to create, compare, delete tests
+    :param request:
+    :param app_id: ID of the app the user wants to see
+    :return:
+    '''
     app = get_object_or_404(Application, pk=app_id)
     tests = Test.objects.filter(application=app)
 
@@ -36,6 +53,13 @@ def app_detail(request, app_id):
     return render(request, 'app_detail.html', {'table': table, 'app':app})
 
 def update_test(request):
+    '''
+
+    Calls the WebPageTester API to update the test
+    This should be a POST with the parameter test_id sent
+    :param request:
+    :return:
+    '''
 
     id_teste = request.POST['test_id']
     test = Test.objects.get(id=int(id_teste))
@@ -47,6 +71,13 @@ def update_test(request):
 
 
 def create_test(request):
+    '''
+
+    GET - Return the create test page
+    POST - creates the test. POST should have the parameters 'test_label', 'test_url' and 'test_application'
+    :param request:
+    :return:
+    '''
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -57,12 +88,16 @@ def create_test(request):
             test_url = form.cleaned_data['test_url']
             test_application = form.cleaned_data['test_application']
 
+            user = User.objects.get(id=1)
+
             test = Test(label=test_label,
                         application=Application.objects.get(id=test_application),
                         url=test_url,
                         created_date=timezone.now(),
-                        created_by=User.objects.get(id=1))
+                        created_by=user)
             test.save()
+            log = Log(date=timezone.now(), entry='{usuario} - Test {id} criado - {url}'.format(id=test.id, usuario=user.name, url=test_url))
+            log.save()
 
             wpt = WebPageTester()
             wpt.create_test(test)
@@ -74,3 +109,14 @@ def create_test(request):
         form = TestForm()
 
     return render(request, 'create_test.html', {'form': form})
+
+def delete_tests(request):
+    id_tests = request.POST['tests'].split(';')
+    for id_test in id_tests:
+        print('Deleting test ID {id}'.format(id=id_test))
+        test = Test.objects.get(id=int(id_test))
+        test.delete()
+        log = Log(date=timezone.now(), entry='{usuario} - Test {id} deletado - {url}'.format(id=id_test, usuario='Teste', url=test.url))
+        log.save()
+
+    return HttpResponse('OK')

@@ -9,13 +9,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/table-dark-styles.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/webpagetester.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/lib/jquery.fancybox.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/jquery-ui.css' %}" />
 
     <script type="text/javascript" src="{% static 'js/libs/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/libs/WearProtection.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/libs/jquery.fancybox.pack.js' %}"></script>
     <script type="text/javascript" src="{% static 'js//app_detail.js' %}"></script>
-
-
 
 </head>
 <body>
@@ -24,15 +24,28 @@
 <div>
     <h1>{{app.name}}</h1>
 </div>
-<div>
+<div style="float:left">
     <form action="/create_test/" method="POST">
-    {% csrf_token %}
-    <button type="submit" class="button" >Criar Teste</button>
+        {% csrf_token %}
+        <button type="submit" class="button" >Criar Teste</button>
+    </form>
+    <form action="/compare/" method="POST"  id="btn_compare">
+        {% csrf_token %}
+        <button type="submit" class="button" >Comparar</button>
+    </form>
+    <form action="/delete/" method="POST" id="btn_delete">
+        {% csrf_token %}
+        <button type="submit" class="button" >Deletar</button>
     </form>
 </div>
 
 <div>
     {% render_table table %}
 </div>
+
+<div id="dialog-confirm" title="Deletar os testes selecionados?">
+  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Os testes não poderão ser recuperados, tem certeza?</p>
+</div>
+
 </body>
 </html>

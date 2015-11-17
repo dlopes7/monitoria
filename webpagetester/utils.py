@@ -1,6 +1,6 @@
 import requests
 
-from monitoria.config import WPT_FORMAT, WPT_KEY, WPT_PASSWORD, WPT_LOGIN
+from monitoria.config import WPT_FORMAT, WPT_KEY, WPT_PASSWORD, WPT_LOGIN, WPT_LOCATIONS
 from webpagetester.models import Test
 
 class WebPageTester:
@@ -9,7 +9,7 @@ class WebPageTester:
         params = {
             'url': test.url,
             'label': test.label,
-            #'location': 'ec2-sa-east-1:Chrome',
+            'location': WPT_LOCATIONS['BRAZIL'],
             'f': WPT_FORMAT,
             'login': WPT_LOGIN,
             'password': WPT_PASSWORD,

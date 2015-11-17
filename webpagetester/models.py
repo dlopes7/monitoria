@@ -2,6 +2,9 @@ from django.utils import timezone
 
 from django.db import models
 
+class Log(models.Model):
+    date = models.DateTimeField('created date', default=timezone.now())
+    entry = models.CharField(max_length=1000)
 
 class User(models.Model):
     name = models.CharField(max_length=200)
