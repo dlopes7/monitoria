@@ -14,6 +14,7 @@ class WebPageTester:
             'login': WPT_LOGIN,
             'password': WPT_PASSWORD,
             'k': WPT_KEY,
+            'uastring': 'WebPageTester CNOVA',
         }
         r = requests.get(url_wpt, params=params)
         json_result = r.json()

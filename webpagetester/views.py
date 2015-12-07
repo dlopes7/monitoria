@@ -1,5 +1,9 @@
+import json
+
+from django.core import serializers
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Q
 
@@ -68,6 +72,27 @@ def update_test(request):
     test.update_from_test_result(wpt.get_test_details(test.wpt_test_id))
 
     return HttpResponse('OK')
+
+def app_chart(request, app_id):
+    app = Application.objects.get(pk=app_id)
+    return render(request, 'app_chart.html', {'app': app})
+
+
+def json_chart(request):
+    try:
+        app_id = request.GET['app_id']
+        app = Application.objects.get(pk=app_id)
+        tests = Test.objects.filter(application=app)
+        data = serializers.serialize('json',
+                                     tests,
+                                     #fields=('label',),
+                                     )
+
+    except Exception as e:
+        return HttpResponse('Error: ' + str(e))
+
+    return HttpResponse(data, content_type='application/javascript')
+
 
 
 def create_test(request):

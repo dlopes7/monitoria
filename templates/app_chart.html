@@ -24,31 +24,5 @@
 <div>
     <h1>{{app.name}}</h1>
 </div>
-<div style="float:left">
-    <form action="/create_test/" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="button" >Criar Teste</button>
-    </form>
-    <form action="/compare/" method="POST"  id="btn_compare">
-        {% csrf_token %}
-        <button type="submit" class="button" >Comparar</button>
-    </form>
-    <form action="/delete/" method="POST" id="btn_delete">
-        {% csrf_token %}
-        <button type="submit" class="button" >Deletar</button>
-    </form>
-    <form action="/{{ app.id }}/charts/" method="GET" id="btn_charts">
-        <button type="submit" class="button" >Gráficos</button>
-    </form>
-</div>
-
-<div>
-    {% render_table table %}
-</div>
-
-<div id="dialog-confirm" title="Deletar os testes selecionados?">
-  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Os testes não poderão ser recuperados, tem certeza?</p>
-</div>
-
 </body>
 </html>

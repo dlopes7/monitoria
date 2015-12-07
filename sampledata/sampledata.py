@@ -29,9 +29,6 @@ if make_apps:
     app = Application(name='Extra')
     app.save()
 
-
-
-
 i = 0
 
 while True:
@@ -51,4 +48,4 @@ while True:
         wpt.create_test(test)
 
     i+= 1
-    time.sleep(1800)
+    time.sleep(3600)
