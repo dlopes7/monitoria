@@ -6,23 +6,130 @@
 <head>
     <meta charset="UTF-8">
     <title>{{app.name}}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/table-dark-styles.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/webpagetester.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/jquery.fancybox.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/jquery-ui.css' %}" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/keen-dashboards.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/dc.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/lib/bootstrap-datetimepicker.css' %}" />
 
     <script type="text/javascript" src="{% static 'js/libs/jquery-2.1.4.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/libs/WearProtection.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/libs/jquery.fancybox.pack.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js//app_detail.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/bootstrap-datetimepicker.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/libs/crossfilter.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/queue.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/d3.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/dc.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/libs/keen.min.js' %}"></script>
+
+
+     <script type="text/javascript" src="{% static 'js/app_charts.js' %}"></script>
+
 
 </head>
 <body>
-<div id="overlay"><img id="img-load" src="{% static 'img/loading.gif' %}"></div>
+
+
 
 <div>
-    <h1>{{app.name}}</h1>
+    <h1></h1>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class='col-md-3'>
+            <div class="form-group">
+                <select class="form-control" id="sel_application">
+                    {% for app in apps %}
+                        <option value="{{app.id}}">{{app.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class='col-md-2'>
+            <div class="form-group">
+                <select class="form-control" id="sel_metric">
+                    <option value="wpt_firstView_bytesIn">Page Size</option>
+                    <option value="wpt_firstView_bytesIn">Speed Index</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-md-3'>
+            <div class="form-group">
+                <div class='input-group date' id='date_from'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-3'>
+            <div class="form-group">
+                <div class='input-group date' id='date_to'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-2'>
+            <div class="form-group">
+                <button type="button" class="btn btn-success" id="btn_chart">Chart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                    Gráfico
+                </div>
+                <div class="chart-stage">
+                    <div id="time-chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+//$('#date_from').data("DateTimePicker").date().format("D/M/YYYY HH:mm:ss")
+
+$( document ).ready(function() {
+    $(function () {
+        var today = new Date();
+
+        $('#date_from').datetimepicker();
+        $('#date_from').datetimepicker();
+        $('#date_to').datetimepicker({
+            useCurrent: false
+        });
+
+
+        $('#date_to').data("DateTimePicker").date(today);
+        today.setDate(today.getDate() - 1)
+        $('#date_from').data("DateTimePicker").date(today);
+
+        $("#date_from").on("dp.change", function (e) {
+            $('#date_to').data("DateTimePicker").minDate(e.date);
+        });
+        $("#date_to").on("dp.change", function (e) {
+            $('#date_from').data("DateTimePicker").maxDate(e.date);
+        });
+
+    });
+});
+</script>
+
 </body>
 </html>

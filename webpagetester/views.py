@@ -1,9 +1,10 @@
 import json
+from datetime import datetime
+
 
 from django.core import serializers
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
-from django.http import JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import timezone
 from django.db.models import Q
 
@@ -73,23 +74,44 @@ def update_test(request):
 
     return HttpResponse('OK')
 
-def app_chart(request, app_id):
-    app = Application.objects.get(pk=app_id)
-    return render(request, 'app_chart.html', {'app': app})
+def app_chart(request):
+    apps = Application.objects.all()
+    return render(request, 'app_chart.html', {'apps': apps})
 
 
 def json_chart(request):
     try:
         app_id = request.GET['app_id']
+        metric = request.GET['metric']
+        #url = request.GET['url']
+        time_from = request.GET['time_from']
+        time_to = request.GET['time_to']
+
+        print (time_from, time_to)
+        time_from_formatted = datetime.strptime(time_from, "%d/%m/%Y %H:%M:%S")
+        time_to_formatted = datetime.strptime(time_to, "%d/%m/%Y %H:%M:%S")
+
+        #13/12/2015 15:44:45
+        #14/12/2015 15:44:45
+
+
+
+
+
         app = Application.objects.get(pk=app_id)
-        tests = Test.objects.filter(application=app)
+        tests = Test.objects.filter(application=app,
+                                    created_date__gt=time_from_formatted,
+                                    created_date__lt=time_to_formatted,
+                                    #url=url,
+                                    ).order_by('created_date')
+
         data = serializers.serialize('json',
                                      tests,
-                                     #fields=('label',),
+                                     fields=('label', 'created_date', 'wpt_firstView_bytesIn'),
                                      )
 
     except Exception as e:
-        return HttpResponse('Error: ' + str(e))
+        return HttpResponseBadRequest('Error: ' + str(e))
 
     return HttpResponse(data, content_type='application/javascript')
 

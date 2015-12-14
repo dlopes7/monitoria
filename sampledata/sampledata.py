@@ -1,10 +1,15 @@
 import os
+import sys
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "monitoria.settings")
 
 import datetime
 import time
 
 from django.utils import timezone
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 from webpagetester.models import User, Application, Test
 from webpagetester.utils import WebPageTester
@@ -48,4 +53,4 @@ while True:
         wpt.create_test(test)
 
     i+= 1
-    time.sleep(3600)
+    time.sleep(0.5 * 60 * 60)

@@ -1,4 +1,5 @@
 import os
+import time
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "monitoria.settings")
 
@@ -9,17 +10,20 @@ from webpagetester.models import User, Application, Test
 
 
 wpt = WebPageTester()
-tests_not_completed = Test.objects.filter(~Q(wpt_status_code = 200), ~Q(wpt_status_code = -1))
 
-for test in tests_not_completed:
-    try:
-        print (test.label, test.wpt_status_code, test.wpt_status_text, end=' -> ')
+while True:
+    tests_not_completed = Test.objects.filter(~Q(wpt_status_code = 200), ~Q(wpt_status_code = -1))
 
-        json_result = wpt.get_test_details(test.wpt_test_id)
-        test.update_from_test_result(json_result)
+    for test in tests_not_completed:
+        try:
+            print (test.label, test.wpt_status_code, test.wpt_status_text, end=' -> ')
 
-        print (test.wpt_status_code, test.wpt_status_text)
-    except:
-        pass
+            json_result = wpt.get_test_details(test.wpt_test_id)
+            test.update_from_test_result(json_result)
 
-#TODO Populate the actuals, average and std of the test - START WITH ACTUAL
+            print (test.wpt_status_code, test.wpt_status_text)
+        except:
+            pass
+
+    time.sleep(15 * 60)
+
