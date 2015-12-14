@@ -168,7 +168,11 @@ class Test(models.Model):
 
         self.save()
 
-
+class Metric(models.Model):
+    name = models.CharField(max_length=200)
+    metric_id = models.CharField(max_length=200)
+    description_ptBR = models.CharField(max_length=2000)
+    description_enUS = models.CharField(max_length=2000)
 
 
 

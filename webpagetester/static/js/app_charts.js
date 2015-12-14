@@ -95,7 +95,7 @@ function makeGraphs(error, testes) {
 		.elasticY(true)
 		.yAxisLabel(metric_name)
 		.xAxisLabel("Horario")
-		.xAxis().ticks(24);
+		.xAxis().ticks(12);
 
     var tempoFormat = d3.time.format("%d/%m/%Y %H:%M:%S");
     var dataFormat = d3.time.format("%d/%m/%Y");
