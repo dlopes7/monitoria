@@ -62,6 +62,7 @@
                 </select>
             </div>
         </div>
+
     </div>
     <div class="row">
         <div class='col-md-3'>
@@ -84,9 +85,14 @@
                 </div>
             </div>
         </div>
-        <div class='col-md-2'>
+        <div class='col-md-1'>
             <div class="form-group">
                 <button type="button" class="btn btn-success" id="btn_chart">Chart</button>
+            </div>
+        </div>
+        <div class='col-md-2'>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="btn_detalhes">Go to Details</button>
             </div>
         </div>
     </div>
@@ -106,7 +112,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <div class="chart-wrapper">
                 <div class="chart-title">
                     Tabela
@@ -119,35 +125,6 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-
-$( document ).ready(function() {
-    $(function () {
-        var today = new Date();
-
-        $('#date_from').datetimepicker();
-        $('#date_from').datetimepicker();
-        $('#date_to').datetimepicker({
-            useCurrent: false
-        });
-
-        $('#date_to').data("DateTimePicker").date(today);
-        today.setDate(today.getDate() - 1)
-        $('#date_from').data("DateTimePicker").date(today);
-
-        $("#date_from").on("dp.change", function (e) {
-            $('#date_to').data("DateTimePicker").minDate(e.date);
-        });
-        $("#date_to").on("dp.change", function (e) {
-            $('#date_from').data("DateTimePicker").maxDate(e.date);
-        });
-
-         chart();
-    });
-
-});
-</script>
 
 </body>
 </html>

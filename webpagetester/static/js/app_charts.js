@@ -14,7 +14,37 @@ $( document ).ready(function() {
     $( "#btn_chart" ).click(function() {
         chart();
     });
+
+    $( "#btn_detalhes" ).click(function() {
+        var app_id = $( "#sel_application option:selected" ).val();
+         window.location = "http://vlo02737.corp.nova/" + app_id;
+    });
+
+    $(function () {
+        var today = new Date();
+
+        $('#date_from').datetimepicker();
+        $('#date_from').datetimepicker();
+        $('#date_to').datetimepicker({
+            useCurrent: false
+        });
+
+        $('#date_to').data("DateTimePicker").date(today);
+        today.setDate(today.getDate() - 1)
+        $('#date_from').data("DateTimePicker").date(today);
+
+        $("#date_from").on("dp.change", function (e) {
+            $('#date_to').data("DateTimePicker").minDate(e.date);
+        });
+        $("#date_to").on("dp.change", function (e) {
+            $('#date_from').data("DateTimePicker").maxDate(e.date);
+        });
+
+         chart();
+    });
+
 });
+
 
 
 function makeGraphs(error, testes) {
