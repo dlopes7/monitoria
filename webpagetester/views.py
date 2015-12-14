@@ -102,12 +102,13 @@ def json_chart(request):
         tests = Test.objects.filter(application=app,
                                     created_date__gt=time_from_formatted,
                                     created_date__lt=time_to_formatted,
+                                    wpt_status_code=200,
                                     #url=url,
                                     ).order_by('created_date')
 
         data = serializers.serialize('json',
                                      tests,
-                                     fields=('label', 'created_date', 'wpt_firstView_bytesIn'),
+                                     fields=('label', 'created_date', metric, 'url'),
                                      )
 
     except Exception as e:

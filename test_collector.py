@@ -25,5 +25,5 @@ while True:
         except:
             pass
 
-    time.sleep(15 * 60)
+    time.sleep(5 * 60)
 

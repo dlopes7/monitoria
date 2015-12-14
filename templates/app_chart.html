@@ -52,7 +52,13 @@
             <div class="form-group">
                 <select class="form-control" id="sel_metric">
                     <option value="wpt_firstView_bytesIn">Page Size</option>
-                    <option value="wpt_firstView_bytesIn">Speed Index</option>
+                    <option value="wpt_firstView_SpeedIndex">Speed Index</option>
+                    <option value="wpt_firstView_breakdown_image_bytes">Image Bytes</option>
+                    <option value="wpt_firstView_breakdown_css_bytes">CSS Bytes</option>
+                    <option value="wpt_firstView_breakdown_js_bytes">Javascript Bytes</option>
+                    <option value="wpt_firstView_requests">Requests</option>
+
+
                 </select>
             </div>
         </div>
@@ -99,11 +105,22 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="chart-wrapper">
+                <div class="chart-title">
+                    Tabela
+                </div>
+                <div class="chart-stage">
+                    <table class="table table-hover tests-table">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
-
-//$('#date_from').data("DateTimePicker").date().format("D/M/YYYY HH:mm:ss")
 
 $( document ).ready(function() {
     $(function () {
@@ -114,7 +131,6 @@ $( document ).ready(function() {
         $('#date_to').datetimepicker({
             useCurrent: false
         });
-
 
         $('#date_to').data("DateTimePicker").date(today);
         today.setDate(today.getDate() - 1)
@@ -127,7 +143,9 @@ $( document ).ready(function() {
             $('#date_from').data("DateTimePicker").maxDate(e.date);
         });
 
+         chart();
     });
+
 });
 </script>
 
