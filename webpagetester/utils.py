@@ -5,6 +5,9 @@ from webpagetester.models import Test
 
 class WebPageTester:
     def create_test(self, test):
+
+        num_keys = len(WPT_KEYS)
+
         url_wpt = 'http://www.webpagetest.org/runtest.php?'
         params = {
             'url': test.url,
@@ -22,14 +25,17 @@ class WebPageTester:
         test.wpt_status_code = json_result['statusCode']
         test.wpt_status_text = json_result['statusText']
 
-
-        if test.wpt_status_code == 400:
-            print(json_result, 'Retrying with second API Key')
-            params['k'] = WPT_KEYS[1]
+        api_retry = 1
+        while test.wpt_status_code == 400:
+            print(json_result, 'Retrying with API Key #{api_retry}'.format(api_retry=api_retry+1))
+            params['k'] = WPT_KEYS[api_retry]
+            api_retry += 1
             r = requests.get(url_wpt, params=params)
             json_result = r.json()
             test.wpt_status_code = json_result['statusCode']
             test.wpt_status_text = json_result['statusText']
+            if api_retry == num_keys -1:
+                break
 
         if test.wpt_status_code > 300:
              print(json_result)

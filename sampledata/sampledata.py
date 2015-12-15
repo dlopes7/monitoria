@@ -20,7 +20,8 @@ make_apps = False
 
 app_names = ['Extra',
              'Casas Bahia',
-             'Ponto Frio']
+             'Ponto Frio',
+             'Walmart']
 
 if make_users:
     print('Creating user David')

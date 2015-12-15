@@ -10,7 +10,6 @@ function getMetricDescription() {
       success: function(json_results) {
         $("#metricDescription").text(json_results[metric])
         $("#metricName").text(metricName)
-          console.log(json_results)
        },
       error: function (request, status, error) {
         console.log(error);
