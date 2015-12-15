@@ -1,3 +1,23 @@
+function getMetricDescription() {
+
+   var metric = $( "#sel_metric option:selected" ).val();
+   var metricName = $( "#sel_metric option:selected" ).text();
+   var dataObj = {"metric" : metric};
+   $.ajax({
+      type: 'GET',
+      url: "/get_metric_description/",
+      data: dataObj,
+      success: function(json_results) {
+        $("#metricDescription").text(json_results[metric])
+        $("#metricName").text(metricName)
+          console.log(json_results)
+       },
+      error: function (request, status, error) {
+        console.log(error);
+    }
+   });
+}
+
 function chart(){
 
     var app_id = $( "#sel_application option:selected" ).val();
@@ -19,6 +39,12 @@ $( document ).ready(function() {
         var app_id = $( "#sel_application option:selected" ).val();
          window.location = "http://vlo02737.corp.nova/" + app_id;
     });
+
+    $('#sel_metric').on('change', function() {
+        getMetricDescription();
+    });
+
+
 
     $(function () {
         var today = new Date();
@@ -42,6 +68,8 @@ $( document ).ready(function() {
 
          chart();
     });
+
+
 
 });
 
@@ -85,7 +113,7 @@ function makeGraphs(error, testes) {
 
     var timeChart = dc.lineChart("#time-chart");
 	timeChart
-		.width($(document).width() * 0.70)
+		.width($(document).width() * 0.60)
 		.height(320)
 		.brushOn(true)
 		.margins({top: 20, right: 150, bottom: 30, left: 100})

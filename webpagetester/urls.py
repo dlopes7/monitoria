@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^delete_tests/$', views.delete_tests, name='delete_tests'),
 
     url(r'^json_chart/$', views.json_chart, name='json_chart'),
+    url(r'^get_metric_description/$', views.get_metric_description, name='get_metric_description'),
 
+    #get_metric_description
 ]

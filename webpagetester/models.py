@@ -170,7 +170,7 @@ class Test(models.Model):
 
 class Metric(models.Model):
     name = models.CharField(max_length=200)
-    metric_id = models.CharField(max_length=200)
+    metric_id = models.CharField(max_length=200, unique=True)
     description_ptBR = models.CharField(max_length=2000)
     description_enUS = models.CharField(max_length=2000)
 

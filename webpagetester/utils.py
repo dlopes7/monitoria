@@ -1,6 +1,6 @@
 import requests
 
-from monitoria.config import WPT_FORMAT, WPT_KEY, WPT_PASSWORD, WPT_LOGIN, WPT_LOCATIONS
+from monitoria.config import WPT_FORMAT, WPT_KEYS, WPT_PASSWORD, WPT_LOGIN, WPT_LOCATIONS
 from webpagetester.models import Test
 
 class WebPageTester:
@@ -13,7 +13,7 @@ class WebPageTester:
             'f': WPT_FORMAT,
             'login': WPT_LOGIN,
             'password': WPT_PASSWORD,
-            'k': WPT_KEY,
+            'k': WPT_KEYS[0],
             'uastring': 'WebPageTester CNOVA',
         }
         r = requests.get(url_wpt, params=params)
@@ -22,9 +22,18 @@ class WebPageTester:
         test.wpt_status_code = json_result['statusCode']
         test.wpt_status_text = json_result['statusText']
 
+
+        if test.wpt_status_code == 400:
+            print(json_result, 'Retrying with second API Key')
+            params['k'] = WPT_KEYS[1]
+            r = requests.get(url_wpt, params=params)
+            json_result = r.json()
+            test.wpt_status_code = json_result['statusCode']
+            test.wpt_status_text = json_result['statusText']
+
         if test.wpt_status_code > 300:
-            print(json_result)
-            return None
+             print(json_result)
+             return None
         else:
             test.wpt_test_id = json_result['data']['testId']
             test.wpt_jsonUrl = json_result['data']['jsonUrl']

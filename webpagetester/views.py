@@ -10,7 +10,7 @@ from django.db.models import Q
 
 from django_tables2 import RequestConfig
 
-from .models import Application, Test, User, Log
+from .models import Application, Test, User, Log, Metric
 from .forms import TestForm
 from .utils import WebPageTester
 from .tables import TestTable
@@ -76,7 +76,19 @@ def update_test(request):
 
 def app_chart(request):
     apps = Application.objects.all()
-    return render(request, 'app_chart.html', {'apps': apps})
+    metrics = Metric.objects.all()
+    return render(request, 'app_chart.html', {'apps': apps, 'metrics': metrics})
+
+
+def get_metric_description(request):
+    metric = request.GET['metric']
+
+    metric = Metric.objects.get(metric_id=metric)
+    metric_json = {metric.metric_id: metric.description_ptBR}
+
+    return HttpResponse(json.dumps(metric_json), content_type="application/json")
+
+
 
 
 def json_chart(request):
