@@ -116,7 +116,7 @@ def json_chart(request):
 
         data = serializers.serialize('json',
                                      tests,
-                                     fields=('label', 'created_date', metric, 'url'),
+                                     #fields=('label', 'created_date', metric, 'url'),
                                      )
 
     except Exception as e:

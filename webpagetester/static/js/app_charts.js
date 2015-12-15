@@ -73,7 +73,21 @@ $( document ).ready(function() {
 
 });
 
-
+function humanFileSize(bytes, si) {
+    var thresh = si ? 1000 : 1024;
+    if(Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+    }
+    var units = si
+        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+    var u = -1;
+    do {
+        bytes /= thresh;
+        ++u;
+    } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+    return bytes.toFixed(2)+' '+units[u];
+}
 
 function makeGraphs(error, testes) {
     var metric = $( "#sel_metric option:selected" ).val();
@@ -149,9 +163,21 @@ function makeGraphs(error, testes) {
 	           }
 	        },
 	        {
-	           label:metric_name,
+	           label:'Page Size',
 	           format: function(d){
-	            return d['fields'][metric];
+	            return humanFileSize(d['fields']['wpt_firstView_bytesIn'], true);
+	           }
+	        },
+	        {
+	           label:'Speed Index',
+	           format: function(d){
+	            return d['fields']['wpt_firstView_SpeedIndex'];
+	           }
+	        },
+	        {
+	           label:'Requests',
+	           format: function(d){
+	            return d['fields']['wpt_firstView_requests'];
 	           }
 	        }
         ])
@@ -160,10 +186,5 @@ function makeGraphs(error, testes) {
             return d['fields']['created_date'];
         })
     dc.renderAll();
-
-
-
-
-
 
 }
