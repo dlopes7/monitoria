@@ -34,7 +34,7 @@ class WebPageTester:
             json_result = r.json()
             test.wpt_status_code = json_result['statusCode']
             test.wpt_status_text = json_result['statusText']
-            if api_retry == num_keys -1:
+            if api_retry == num_keys:
                 break
 
         if test.wpt_status_code > 300:
