@@ -21,7 +21,10 @@ make_apps = False
 app_names = ['Extra',
              'Casas Bahia',
              'Ponto Frio',
-             'Walmart']
+             'Walmart',
+             'Extra Mobile',
+             'Casas Bahia Mobile',
+             'Ponto Frio Mobile']
 
 if make_users:
     print('Creating user David')
@@ -43,9 +46,13 @@ while True:
 
     for app_name in app_names:
         app = Application.objects.get(name=app_name)
+        url = 'www.{bandeira}.com.br'.format(bandeira=app_name.lower().replace(' ', ''))
+        if 'Mobile' in app.name:
+            url = 'm.{bandeira}.com.br'.format(bandeira=app_name.lower().replace(' ', '').replace('mobile', ''))
+        print (url)
         test = Test(label='Test {app} {dia}_{mes}_{num}'.format(app=app.name , num=i+1, dia=dia, mes=mes),
                     application=app,
-                    url='www.{bandeira}.com.br'.format(bandeira=app_name.lower().replace(' ', '')),
+                    url=url,
                     created_date=timezone.now(),
                     created_by=user)
         print('Creating test {test}'.format(test=test.label))
